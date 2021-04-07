@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml>
-    
-  <!--category>
-    <pattern>*</pattern>
-    <template> 
-        <random>
-            <li>Olá, o que posso fazer por você?</li>
-            <li>Oi, posso te ajudar?</li>
-            <li>Desculpe-me, pode repetir novamente sua frase de forma mais completa?</li>
-        </random>
-    </template>
-  </category>!-->
 
   <category>
     <pattern>_ Chicó</pattern>
     <template>
-        Olá! Bem vindo a Washington Store, qual o seu nome?
+        Olá! Bem vindo a Washington Store, sou seu assitente de compras, qual é o seu nome?
     </template>
   </category>
+  
+    <category>
+          <pattern>_ chico</pattern>
+          <template>
+             <srai>_ Chicó</srai>
+          </template>
+    </category>
    
    <category>
     <pattern>Meu nome é *</pattern>
     <template>
-        Ótimo <set name = "username"><star/></set>!, aqui temos variedades de produtos, você está interessado em uma calça ou uma camisa? 
+        Ótimo <set name = "username"><star/></set>! Aqui temos variedades de produtos, você está interessado em uma calça ou uma camisa? 
     </template>
   </category>
   
@@ -30,7 +26,8 @@
     <pattern>_ uma calça</pattern>
     <template> 
         <think><set name = "pedidoType">calça</set><set name = "topic">tamanho</set></think>
-        Ótimo, temos somente 3 tamanhos no nosso estoque: 
+        <image>https://img.lojasrenner.com.br/item/537161568/zoom/9.jpg</image>
+        Ótimo, essa acima é nosso único modelo, temos somente 3 tamanhos no nosso estoque: 
         <br/>34, 35 ou 36
         <br/>Qual é o seu?
     </template>
@@ -40,7 +37,8 @@
     <pattern>_ uma camisa</pattern>
     <template> 
         <think><set name = "pedidoType">camisa</set><set name = "topic">tamanho</set></think>
-        Ótimo, temos somente 3 tamanhos no nosso estoque: 
+        <image>https://ecom-zjoeihfm.sfo2.digitaloceanspaces.com/imgs/big/@v2-1587145448920-camisa-social-azul-royal_0.jpg</image>
+        Ótimo essa acima é nosso único modelo, temos somente 3 tamanhos no nosso estoque: 
         <br/>P, M ou G
         <br/>Qual é o seu?
     </template>
@@ -86,45 +84,43 @@
  
   <topic name = "calça">
       <category>
-        <pattern>Escolho * fit</pattern>
+        <pattern>Prefiro * fit</pattern>
         <template> 
         <think><set name = "fitType"><star/></set></think>
             Segue as informações do seu pedido:
             <br/>Pedido feito por <get name = "username"/> 
             <br/>Uma <get name = "pedidoType"/> de tamanho <get name = "sizeOf"/>, no estilo <get name = "fitType"/> fit
-            <br/>Confirmar o seu pedido? (Sim ou Não)
+            <br/>Confirmar o seu pedido? (Confirmo ou Não confirmo)
             <br/>Seu pedido está sendo processado...
-            <br/>Obrigado pela compra, volte sempre
         </template>
       </category>
   </topic>
   
   <topic name = "camisa">
       <category>
-        <pattern>Escolho a gola *</pattern>
+        <pattern>Prefiro a gola *</pattern>
         <template> 
         <think><set name = "fitType"><star/></set></think>
             Segue as informações do seu pedido:
             <br/>Pedido feito por <get name = "username"/> 
             <br/>Uma <get name = "pedidoType"/> de tamanho <get name = "sizeOf"/>, no estilo <get name = "fitType"/>
-            <br/>Confirmar o seu pedido? (Sim ou Não)
+            <br/>Confirmar o seu pedido? (Confirmo ou Não confirmo)
             <br/>Seu pedido está sendo processado...
-            <br/>Obrigado pela compra, volte sempre
         </template>
       </category>
   </topic>
   
   <category>
-        <pattern>Sim</pattern>
+        <pattern>Confirmo</pattern>
         <template> 
-        <think><set name = "pedido">sim</set></think>
-            <br/>Pedido confirmado, vamos conferir seus dados
-            <br/>Seu pedido está sendo processado...
+        <think><set name = "pedido">sim</set><set name = "topic">pedido</set></think>
+            <br/>Vamos conferir seus dados e confirmar seu pedido
+            <br/>Seu pedido está sendo processado... (envie "atualizar" para mais informações)
         </template>
   </category>
   
   <category>
-        <pattern>Não</pattern>
+        <pattern>Não confirmo</pattern>
         <template> 
         <think><set name = "pedido">não</set></think>
             <br/>Por favor, você pode repetir seu pedido, você está interessado em uma calça ou uma camisa?
@@ -132,7 +128,17 @@
   </category>
   
   
-   
- 
+  <topic name = "pedido">
+      <category>
+        <pattern>atualizar</pattern>
+        <template> 
+            <br/>Pedido confirmado e enviado com sucesso!
+            <br/>Obrigado pela escolha <get name = "username"/> 
+            <br/>Volte sempre a Washington Store
+            <br/>Quer fazer novamente um pedido de uma calça ou uma camisa? 
+        </template>
+      </category>
+  </topic>
+  
 
 </aiml>
