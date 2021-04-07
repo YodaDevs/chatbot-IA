@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml>
+    
+  <!--category>
+    <pattern>*</pattern>
+    <template> 
+        <random>
+            <li>Olá, o que posso fazer por você?</li>
+            <li>Oi, posso te ajudar?</li>
+            <li>Desculpe-me, pode repetir novamente sua frase de forma mais completa?</li>
+        </random>
+    </template>
+  </category>!-->
+
+  <category>
+    <pattern>Olá *</pattern>
+    <template> 
+        Olá! Bem vindo a MOPA store, qual o seu nome?
+    </template>
+  </category>
+   
+   <category>
+      <pattern>Oi *</pattern>
+      <template>
+         <srai>Olá *</srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>Oi</pattern>
+      <template>
+         <srai>Olá *</srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>Olá</pattern>
+      <template>
+         <srai>Olá *</srai>
+      </template>
+   </category>
+   
+   <category>
+    <pattern>Meu nome é *</pattern>
+    <template> 
+        Ótimo <set name = "username"><star/></set>!, aqui temos variedades de produtos, você está interessado em uma calça ou uma camisa? 
+    </template>
+  </category>
+  
+  <category>
+    <pattern>_ uma calça</pattern>
+    <template> 
+        <think><set name = "pedidoType">calça</set></think>
+        Ótimo, temos somente 3 tamanhos no nosso estoque: 
+        <br/>34, 35 ou 36
+        <br/>Qual é o seu?
+    </template>
+  </category>
+  
+  <category>
+    <pattern>Meu tamanho é *</pattern>
+    <template> 
+        <think><set name = "tamC"><star/></set></think>
+        Agora, temos somente 3 opções de fit da calça no nosso estoque: 
+        <br/>Slim fit, Regular fit, Skinny fit
+        <br/>Qual a sua preferência?
+    </template>
+  </category>
+  
+  <category>
+      <pattern>Tamanho *</pattern>
+      <template>
+         <srai>Meu tamanho é *</srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>tamanho *</pattern>
+      <template>
+         <srai>Meu tamanho é *</srai>
+      </template>
+   </category>
+  
+  <category>
+    <pattern>Escolho * fit</pattern>
+    <template> 
+    <think><set name = "fitType"><star/></set></think>
+        Segue as informações do seu pedido:
+        <br/>Pedido feito por <get name = "username"/> 
+        <br/>Uma <get name = "pedidoType"/> de tamanho <get name = "tamC"/>, no estilo <get name = "fitType"/> fit
+        <br/>Seu pedido está sendo processado...
+        <br/>Obrigado pela compra, volte sempre
+    </template>
+  </category>
+
+   
+   
+  
+ 
+ 
+
+</aiml>
