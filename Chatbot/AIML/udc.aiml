@@ -13,36 +13,15 @@
   </category>!-->
 
   <category>
-    <pattern>Olá *</pattern>
-    <template> 
-        Olá! Bem vindo a MOPA store, qual o seu nome?
+    <pattern>_ Chicó</pattern>
+    <template>
+        Olá! Bem vindo a Washington Store, qual o seu nome?
     </template>
   </category>
    
    <category>
-      <pattern>Oi *</pattern>
-      <template>
-         <srai>Olá *</srai>
-      </template>
-   </category>
-   
-   <category>
-      <pattern>Oi</pattern>
-      <template>
-         <srai>Olá *</srai>
-      </template>
-   </category>
-   
-   <category>
-      <pattern>Olá</pattern>
-      <template>
-         <srai>Olá *</srai>
-      </template>
-   </category>
-   
-   <category>
     <pattern>Meu nome é *</pattern>
-    <template> 
+    <template>
         Ótimo <set name = "username"><star/></set>!, aqui temos variedades de produtos, você está interessado em uma calça ou uma camisa? 
     </template>
   </category>
@@ -50,7 +29,7 @@
   <category>
     <pattern>_ uma calça</pattern>
     <template> 
-        <think><set name = "pedidoType">calça</set></think>
+        <think><set name = "pedidoType">calça</set><set name = "topic">tamanho</set></think>
         Ótimo, temos somente 3 tamanhos no nosso estoque: 
         <br/>34, 35 ou 36
         <br/>Qual é o seu?
@@ -58,45 +37,102 @@
   </category>
   
   <category>
-    <pattern>Meu tamanho é *</pattern>
+    <pattern>_ uma camisa</pattern>
     <template> 
-        <think><set name = "tamC"><star/></set></think>
-        Agora, temos somente 3 opções de fit da calça no nosso estoque: 
-        <br/>Slim fit, Regular fit, Skinny fit
-        <br/>Qual a sua preferência?
+        <think><set name = "pedidoType">camisa</set><set name = "topic">tamanho</set></think>
+        Ótimo, temos somente 3 tamanhos no nosso estoque: 
+        <br/>P, M ou G
+        <br/>Qual é o seu?
     </template>
   </category>
   
-  <category>
-      <pattern>Tamanho *</pattern>
-      <template>
-         <srai>Meu tamanho é *</srai>
-      </template>
-   </category>
+  <topic name = "tamanho">
+      <category>
+        <pattern>Meu tamanho é *</pattern>
+        <template> 
+            <think><set name = "sizeOf"><star/></set></think>
+            <condition name = "pedidoType" value = "calça">
+               <think><set name = "topic">calça</set></think>
+               Agora, temos somente 3 opções de fit da calça no nosso estoque: 
+               <br/>Slim fit, Regular fit, Skinny fit
+               <br/>Qual a sua preferência?
+             </condition>
+             
+             <condition name = "pedidoType" value = "camisa">
+               <think><set name = "topic">camisa</set></think>
+               Agora, temos somente 3 opções de gola da camisa no nosso estoque:
+               <br/>V, Redonda ou Polo
+               <br/>Qual a sua preferência?
+             </condition>
+             
+        </template>
+      </category>
+      
+      <category>
+          <pattern>Tamanho *</pattern>
+          <template>
+             <srai>Meu tamanho é *</srai>
+          </template>
+      </category>
+       
+       <category>
+          <pattern>tamanho *</pattern>
+          <template>
+             <srai>Meu tamanho é *</srai>
+          </template>
+       </category>
    
-   <category>
-      <pattern>tamanho *</pattern>
-      <template>
-         <srai>Meu tamanho é *</srai>
-      </template>
-   </category>
-  
-  <category>
-    <pattern>Escolho * fit</pattern>
-    <template> 
-    <think><set name = "fitType"><star/></set></think>
-        Segue as informações do seu pedido:
-        <br/>Pedido feito por <get name = "username"/> 
-        <br/>Uma <get name = "pedidoType"/> de tamanho <get name = "tamC"/>, no estilo <get name = "fitType"/> fit
-        <br/>Seu pedido está sendo processado...
-        <br/>Obrigado pela compra, volte sempre
-    </template>
-  </category>
-
-   
-   
-  
+  </topic>
  
+  <topic name = "calça">
+      <category>
+        <pattern>Escolho * fit</pattern>
+        <template> 
+        <think><set name = "fitType"><star/></set></think>
+            Segue as informações do seu pedido:
+            <br/>Pedido feito por <get name = "username"/> 
+            <br/>Uma <get name = "pedidoType"/> de tamanho <get name = "sizeOf"/>, no estilo <get name = "fitType"/> fit
+            <br/>Confirmar o seu pedido? (Sim ou Não)
+            <br/>Seu pedido está sendo processado...
+            <br/>Obrigado pela compra, volte sempre
+        </template>
+      </category>
+  </topic>
+  
+  <topic name = "camisa">
+      <category>
+        <pattern>Escolho a gola *</pattern>
+        <template> 
+        <think><set name = "fitType"><star/></set></think>
+            Segue as informações do seu pedido:
+            <br/>Pedido feito por <get name = "username"/> 
+            <br/>Uma <get name = "pedidoType"/> de tamanho <get name = "sizeOf"/>, no estilo <get name = "fitType"/>
+            <br/>Confirmar o seu pedido? (Sim ou Não)
+            <br/>Seu pedido está sendo processado...
+            <br/>Obrigado pela compra, volte sempre
+        </template>
+      </category>
+  </topic>
+  
+  <category>
+        <pattern>Sim</pattern>
+        <template> 
+        <think><set name = "pedido">sim</set></think>
+            <br/>Pedido confirmado, vamos conferir seus dados
+            <br/>Seu pedido está sendo processado...
+        </template>
+  </category>
+  
+  <category>
+        <pattern>Não</pattern>
+        <template> 
+        <think><set name = "pedido">não</set></think>
+            <br/>Por favor, você pode repetir seu pedido, você está interessado em uma calça ou uma camisa?
+        </template>
+  </category>
+  
+  
+   
  
 
 </aiml>
